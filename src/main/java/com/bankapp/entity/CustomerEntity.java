@@ -1,22 +1,24 @@
-package com.bankapp;
+package com.bankapp.entity;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
-    public Customer() {}
+    public CustomerEntity() {}
 
-    public Customer(String username, String password) {
+    public CustomerEntity(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -31,6 +33,10 @@ public class Customer {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setUsername(String username) {
