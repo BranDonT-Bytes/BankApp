@@ -35,6 +35,31 @@ public class BankDataService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    public CustomerEntity createCustomer(CustomerEntity customer) {
+        if (repo.findByUsername(customer.getUsername()).isPresent()) {
+            throw new RuntimeException("Username already exists");
+        }
+
+        if (customer.getRole() == null) {
+            customer.setRole("CUSTOMER");
+        }
+
+        if (customer.getCheckingBalance() == null) {
+            customer.setCheckingBalance(0.0);
+        }
+
+        if (customer.getSavingsBalance() == null) {
+            customer.setSavingsBalance(0.0);
+        }
+
+        return repo.save(customer);
+    }
+
+    public void deleteCustomer(String username) {
+        CustomerEntity customer = getCustomerByUsername(username);
+        repo.delete(customer);
+    }
+
     public CustomerEntity depositChecking(String username, Double amount) {
         CustomerEntity customer = getCustomerByUsername(username);
         customer.setCheckingBalance(customer.getCheckingBalance() + amount);

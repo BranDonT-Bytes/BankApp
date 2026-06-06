@@ -29,6 +29,16 @@ public class BankController {
         return service.getCustomerByUsername(username);
     }
 
+    @PostMapping
+    public CustomerEntity createCustomer(@RequestBody CustomerEntity customer) {
+        return service.createCustomer(customer);
+    }
+
+    @DeleteMapping("/{username}")
+    public void deleteCustomer(@PathVariable String username) {
+        service.deleteCustomer(username);
+    }
+
     @PostMapping("/checking/deposit")
     public CustomerEntity depositChecking(@RequestBody TransactionRequest request) {
         return service.depositChecking(request.getUsername(), request.getAmount());
